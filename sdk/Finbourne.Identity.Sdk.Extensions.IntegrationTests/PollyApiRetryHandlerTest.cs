@@ -24,10 +24,7 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
         private const string ListenerUriPrefix = "http://localhost:4444/";
         private int _apiCallCount;
 
-        /*This needs to be an object that a method in the Finbourne.Identity.Sdk.Api will return - This example is from Insights
-        private readonly VendorResponse _mockResponse = new VendorResponse("id", "response", 
-            new List<Link> { new Link("relation", "href", "description", "method")});   
-        */
+        private readonly OAuthApplication _mockResponse = new OAuthApplication("id", "type", "displayName", "secret", "clientId", "issuer");          
 
         [SetUp]
         public void SetUp()
@@ -45,8 +42,7 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
             _httpListener.Start();
         }
 
-        #region Sync tests
-        /*
+        #region Sync tests        
         [Test]
         public void CallApiMethod_WhenHttpStatusIs400AndRetryConditionIsNotSatisfied_ThrowsApiExceptionWithoutRetry()
         {
@@ -63,7 +59,7 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
             RetryConfiguration.RetryPolicy = PollyApiRetryHandler.DefaultRetryPolicyWithFallback;
 
             var exception = Assert.Throws<ApiException>(
-                () => _apiFactory.Api<IxxxApi>().GetApiMethodxxx("any")
+                () => _apiFactory.Api<ApplicationsApi>().GetApplication("app_does_not_exist")
             );
 
             Assert.That(exception.ErrorContent, Is.EqualTo(someError));
@@ -86,7 +82,7 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
 
             RetryConfiguration.RetryPolicy = PollyApiRetryHandler.DefaultRetryPolicyWithFallback;
 
-            var sdkResponse = _apiFactory.Api<IxxxApi>().GetApiMethodxxx("any");
+            var sdkResponse = _apiFactory.Api<ApplicationsApi>().GetApplication("app_does_not_exist");
 
             // Api call should be just called once
             Assert.That(_apiCallCount, Is.EqualTo(expectedNumberOfApiCalls));
@@ -109,9 +105,9 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
 
             RetryConfiguration.RetryPolicy = PollyApiRetryHandler.DefaultRetryPolicyWithFallback;
 
-            // Calling GetApiMethodxxx or any other API triggers the flow that triggers polly
+            // Calling GetApplication or any other API triggers the flow that triggers polly
             var exception = Assert.Throws<ApiException>(
-                () => _apiFactory.Api<IxxxApi>().GetApiMethodxxx("any")
+                () => _apiFactory.Api<ApplicationsApi>().GetApplication("app_does_not_exist")
             );
 
             Assert.That(_apiCallCount, Is.EqualTo(expectedNumberOfApiCalls));
@@ -132,8 +128,8 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
             }
             RetryConfiguration.RetryPolicy = PollyApiRetryHandler.DefaultRetryPolicy; // No fallback
 
-            // Calling GetApiMethodxxx or any other API triggers the flow that triggers polly
-            var response = _apiFactory.Api<IxxxApi>().GetApiMethodxxx("any");
+            // Calling GetApplication or any other API triggers the flow that triggers polly
+            var response = _apiFactory.Api<ApplicationsApi>().GetApplication("app_does_not_exist");
 
             Assert.That(_apiCallCount, Is.EqualTo(expectedNumberOfApiCalls));
             Assert.That(response, Is.Null);
@@ -153,8 +149,8 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
             AddMockHttpResponseToQueue(_httpListener, statusCode: 200, responseContent: _mockResponse.ToJson());
             RetryConfiguration.RetryPolicy = PollyApiRetryHandler.DefaultRetryPolicyWithFallback;
 
-            // Calling GetApiMethodxxx or any other API triggers the flow that triggers polly
-            var sdkResponse = _apiFactory.Api<IxxxApi>().GetApiMethodxxx("any");
+            // Calling GetApplication or any other API triggers the flow that triggers polly
+            var sdkResponse = _apiFactory.Api<ApplicationsApi>().GetApplication("app_does_not_exist");
 
             Assert.That(sdkResponse, Is.EqualTo(_mockResponse));
             Assert.That(_apiCallCount, Is.EqualTo(expectedNumberOfApiCalls));
@@ -184,8 +180,8 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
                         retryCount++;
                     });
 
-            // Calling GetApiMethodxxx or any other API triggers the flow that triggers polly
-            var sdkResponse = _apiFactory.Api<IxxxApi>().GetApiMethodxxx("any");
+            // Calling GetApplication or any other API triggers the flow that triggers polly
+            var sdkResponse = _apiFactory.Api<ApplicationsApi>().GetApplication("app_does_not_exist");
 
             Assert.That(retryCount, Is.EqualTo(expectedNumberOfRetries));
             Assert.That(_apiCallCount, Is.EqualTo(expectedNumberOfApiCalls));
@@ -224,11 +220,11 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
                 );
 
             var exception = Assert.Throws<ApiException>(
-                () => _apiFactory.Api<IxxxApi>().GetApiMethodxxx("any"));
+                () => _apiFactory.Api<ApplicationsApi>().GetApplication("app_does_not_exist"));
 
             Assert.That(_apiCallCount, Is.EqualTo(expectedNumberOfApiCalls));
             Assert.That(exception.ErrorCode, Is.EqualTo(0));
-       Assert.That(exception.Message, Contains.Substring("Internal SDK error occurred when calling GetApiMethodxxx: An error occurred while sending the request"));
+       Assert.That(exception.Message, Contains.Substring("Internal SDK error occurred when calling GetApplication: An error occurred while sending the request"));
         }
 
         [Test]
@@ -255,8 +251,8 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
                 .Retry(retryCount: 3, onRetry: (result, i) => policy2TriggerCount++);
             RetryConfiguration.RetryPolicy = policy1.Wrap(policy2);
 
-            // Calling GetApiMethodxxx or any other API triggers the flow that triggers polly
-            var sdkResponse = _apiFactory.Api<IxxxApi>().GetApiMethodxxx("any");
+            // Calling GetApplication or any other API triggers the flow that triggers polly
+            var sdkResponse = _apiFactory.Api<ApplicationsApi>().GetApplication("app_does_not_exist");
 
             Assert.That(policy1TriggerCount, Is.EqualTo(2));
             Assert.That(policy2TriggerCount, Is.EqualTo(1));
@@ -279,22 +275,20 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
                 timeoutAfterMillis + 10);
             RetryConfiguration.RetryPolicy = PollyApiRetryHandler.DefaultRetryPolicyWithFallback;
 
-            // Calling GetApiMethodxxx or any other API triggers the flow that triggers polly
+            // Calling GetApplication or any other API triggers the flow that triggers polly
 
             var exception = Assert.Throws<ApiException>(
-                () => _apiFactory.Api<IxxxApi>().GetApiMethodxxx("any"));
+                () => _apiFactory.Api<ApplicationsApi>().GetApplication("app_does_not_exist"));
 
             Assert.That(_apiCallCount, Is.EqualTo(expectedNumberOfApiCalls));
             // Notice that Sync throws different error message than async
             Assert.That(exception.ErrorContent, Contains.Substring("The operation has timed out"));
             Assert.That(exception.ErrorCode, Is.EqualTo(0));
 
-       }
-       */
-       #endregion
+        }
+        #endregion
 
         #region Async tests
-        /*
         [Test]
         public async Task CallApiMethodAsync_WhenHttpStatusIs200AndRetryConditionIsNotSatisfied_NoPollyRetryIsTriggered()
         {
@@ -309,7 +303,7 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
 
             RetryConfiguration.AsyncRetryPolicy = PollyApiRetryHandler.DefaultRetryPolicyWithFallbackAsync;
 
-            var sdkResponse = await _apiFactory.Api<IxxxApi>().GetApiMethodxxxAsync("any");
+            var sdkResponse = await _apiFactory.Api<IApplicationsApi>().GetApplicationAsync("any");
 
             // Api call should be just called once
             Assert.That(_apiCallCount, Is.EqualTo(expectedNumberOfApiCalls));
@@ -330,8 +324,8 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
             AddMockHttpResponseToQueue(_httpListener, statusCode: 200, responseContent: _mockResponse.ToJson());
             RetryConfiguration.RetryPolicy = PollyApiRetryHandler.DefaultRetryPolicyWithFallback;
 
-            // Calling GetApiMethodxxxAsync or any other API triggers the flow that triggers polly
-            var sdkResponse = await _apiFactory.Api<IxxxApi>().GetApiMethodxxxAsync("any");
+            // Calling GetApplicationAsync or any other API triggers the flow that triggers polly
+            var sdkResponse = await _apiFactory.Api<IApplicationsApi>().GetApplicationAsync("any");
 
             Assert.That(sdkResponse, Is.EqualTo(_mockResponse));
             Assert.That(_apiCallCount, Is.EqualTo(expectedNumberOfApiCalls));
@@ -352,9 +346,9 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
 
             // Calling API triggers the flow that triggers polly
             var exception = Assert.ThrowsAsync<ApiException>(
-                 () => _apiFactory.Api<IxxxApi>().GetApiMethodxxxAsync("any"));
+                 () => _apiFactory.Api<IApplicationsApi>().GetApplicationAsync("any"));
 
-            Assert.That(exception.Message, Is.EqualTo($"Error calling GetApiMethodxxx: {expectedErrorResponse}"));
+            Assert.That(exception.Message, Is.EqualTo($"Error calling GetApplication: {expectedErrorResponse}"));
             Assert.That(exception.ErrorCode, Is.EqualTo(returnedStatusCode));
             Assert.That(_apiCallCount, Is.EqualTo(expectedNumberOfApiCalls));
         }
@@ -372,8 +366,8 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
             }
             RetryConfiguration.AsyncRetryPolicy = PollyApiRetryHandler.DefaultRetryPolicyAsync; // No fallback
 
-            // Calling GetApiMethodxxxAsync or any other API triggers the flow that triggers polly
-            var response = await _apiFactory.Api<IxxxApi>().GetApiMethodxxxAsync("any");
+            // Calling GetApplicationAsync or any other API triggers the flow that triggers polly
+            var response = await _apiFactory.Api<IApplicationsApi>().GetApplicationAsync("any");
 
             // Policies with no fallback return null
             Assert.That(response, Is.Null);
@@ -411,9 +405,9 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
             );
 
 
-            // Calling GetApiMethodxxxAsync or any other API triggers the flow that triggers polly
+            // Calling GetApplicationAsync or any other API triggers the flow that triggers polly
             var exception = Assert.ThrowsAsync<ApiException>(
-                () => _apiFactory.Api<IxxxApi>().GetApiMethodxxxAsync("any"));
+                () => _apiFactory.Api<IApplicationsApi>().GetApplicationAsync("any"));
 
             Assert.That(_apiCallCount, Is.EqualTo(expectedNumberOfApiCalls));
             Assert.That(exception.ErrorCode, Is.EqualTo(0));
@@ -435,14 +429,13 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
             RetryConfiguration.AsyncRetryPolicy = PollyApiRetryHandler.DefaultRetryPolicyWithFallbackAsync;
 
             var exception = Assert.ThrowsAsync<ApiException>(
-                () => _apiFactory.Api<IxxxApi>().GetApiMethodxxxAsync("any"));
+                () => _apiFactory.Api<IApplicationsApi>().GetApplicationAsync("any"));
 
             Assert.That(_apiCallCount, Is.EqualTo(expectedNumberOfApiCalls));
             // Notice that Async throws different error message than Sync
             Assert.That(exception.ErrorContent, Contains.Substring("The request timed-out"));
             Assert.That(exception.ErrorCode, Is.EqualTo(0));
         }
-        */
         #endregion
 
         [TearDown]

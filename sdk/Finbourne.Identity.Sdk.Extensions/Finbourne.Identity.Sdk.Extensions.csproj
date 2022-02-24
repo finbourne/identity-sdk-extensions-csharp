@@ -5,9 +5,9 @@
     <PackageId>Finbourne.Identity.Sdk.Extensions</PackageId>
     <Authors>engineering@finbourne.com</Authors>
     <Company>FINBOURNE Technology Limited</Company>
-	  <Product>LUSID</Product>
-	  <Description>FINBOURNE Identity monitoring and troubleshooting service SDK Extensions</Description>
-	  <RepositoryUrl>https://github.com/finbourne/identity-sdk-extensions-csharp</RepositoryUrl>
+	<Product>LUSID</Product>
+	<Description>FINBOURNE Identity management for LUSID. SDK Extensions</Description>
+	<RepositoryUrl>https://github.com/finbourne/identity-sdk-extensions-csharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <DocumentationFile></DocumentationFile>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>

@@ -24,8 +24,7 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
         {
             try
             {
-                //TODO: Test with a valid API Method
-                //_factory.Api<Api.xxxApi>().Methodxxx("$@!-");
+                _factory.Api<ApplicationsApi>().GetApplication("$@!-");
             }
             catch (ApiException e)
             {
@@ -38,8 +37,7 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
         {
             try
             {
-                //TODO: Test with a valid API Method
-                //_factory.Api<Api.xxxApi>().Methodxxx("$@!-");
+                _factory.Api<ApplicationsApi>().GetApplication("$@!-");
             }
             catch (ApiException e)
             {
@@ -63,8 +61,7 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
         {
             try
             {
-                //TODO: Test with a valid API Method
-                //_factory.Api<Api.xxxApi>().Methodxxx("$@!-");
+                _factory.Api<ApplicationsApi>().GetApplication("$@!-");
             }
             catch (ApiException e)
             {
@@ -79,14 +76,13 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
         {
             try
             {
-                //TODO: Test with a valid API Method
-                //_factory.Api<Api.xxxApi>().Methodxxx("no-scope", "no-code", someObject);
+                _factory.Api<ApplicationsApi>().GetApplication("app_does_not_exist");
             }
             catch (ApiException e)
             {
                 //    ApiException.ErrorContent contains a JSON serialized ErrorResponse
                 LusidProblemDetails errorResponse = e.ProblemDetails();
-                Assert.That(errorResponse.Name, Is.EqualTo("SubscriptionNotFound"));
+                Assert.That(errorResponse.Name, Is.EqualTo("ApplicationDoesNotExist"));
             }
         }
 
@@ -95,8 +91,7 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
         {
             try
             {
-                //TODO: Test with a valid API Method
-                //_factory.Api<Api.xxxApi>().Methodxxx("@£$@£%", "#####", someObject);
+                _factory.Api<ApplicationsApi>().GetApplication("$@!-");
             }
             catch (ApiException e)
             {
@@ -108,12 +103,8 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
                 if (e.TryGetValidationProblemDetails(out var errorResponse))
                 {
                     //Should identify that there was a validation error with the code
-                    Assert.That(errorResponse.Errors, Contains.Key("code"));
-                    Assert.That(errorResponse.Errors["code"].Single(), Is.EqualTo("Values for the field code must be comprised of either alphanumeric characters, hyphens or underscores. For more information please consult the documentation."));
-
-                    //Should identify that there was a validation error with the scope
-                    Assert.That(errorResponse.Errors, Contains.Key("scope"));
-                    Assert.That(errorResponse.Errors["scope"].Single(), Is.EqualTo("Values for the field scope must be comprised of either alphanumeric characters, hyphens or underscores. For more information please consult the documentation."));
+                    Assert.That(errorResponse.Errors, Contains.Key("id"));
+                    Assert.That(errorResponse.Errors["id"].Single(), Is.EqualTo("Values for the field id must be comprised of either alphanumeric characters, hyphens or underscores. For more information please consult the documentation."));
 
                     Assert.That(errorResponse.Detail, Does.Match("One or more elements of the request were invalid.*"));
                     Assert.That(errorResponse.Name, Is.EqualTo("InvalidRequestFailure"));
@@ -130,10 +121,8 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
         {
             try
             {
-                var testScope = new string('a', 100);
-                var testCode = new string('b', 100);
-                //TODO: Test with a valid API Method
-                //_factory.Api<Api.xxxApi>().Methodxxx(testScope, testCode, someObject);
+                var testAppTooLong = new string('a', 65);
+                _factory.Api<ApplicationsApi>().GetApplication(testAppTooLong);
             }
             catch (ApiException e)
             {
@@ -143,12 +132,8 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
                 if (e.TryGetValidationProblemDetails(out var errorResponse))
                 {
                     //Should identify that there was a validation error with the code
-                    Assert.That(errorResponse.Errors, Contains.Key("code"));
-                    Assert.That(errorResponse.Errors["code"].Single(), Is.EqualTo("Values for the field code must be non-zero in length and have no more than 64 characters. For more information please consult the documentation."));
-
-                    //Should identify that there was a validation error with the scope
-                    Assert.That(errorResponse.Errors, Contains.Key("scope"));
-                    Assert.That(errorResponse.Errors["scope"].Single(), Is.EqualTo("Values for the field scope must be non-zero in length and have no more than 64 characters. For more information please consult the documentation."));
+                    Assert.That(errorResponse.Errors, Contains.Key("id"));
+                    Assert.That(errorResponse.Errors["id"].Single(), Is.EqualTo("Values for the field id must be non-zero in length and have no more than 64 characters. For more information please consult the documentation."));
 
                     Assert.That(errorResponse.Detail, Does.Match("One or more elements of the request were invalid.*"));
                     Assert.That(errorResponse.Name, Is.EqualTo("InvalidRequestFailure"));
