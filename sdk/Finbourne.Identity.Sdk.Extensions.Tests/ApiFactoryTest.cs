@@ -20,7 +20,7 @@ namespace Finbourne.Identity.Sdk.Extensions.Tests
         }
 
         [Test]
-        public void InvalidApiUrl_ThrowsException()
+        public void InvalidIdentityUrl_ThrowsException()
         {
             ApiConfiguration apiConfig = new ApiConfiguration
             {

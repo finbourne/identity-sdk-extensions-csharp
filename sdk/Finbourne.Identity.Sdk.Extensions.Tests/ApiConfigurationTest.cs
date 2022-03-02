@@ -97,7 +97,7 @@ namespace Finbourne.Identity.Sdk.Extensions.Tests
         }
 
         [Test]
-        public void ApiConfiguration_HasMissingConfig_Missing_ApiUrl_Returns_True()
+        public void ApiConfiguration_HasMissingConfig_Missing_IdentityUrl_Returns_True()
         {
             ApiConfiguration config = GetApiConfiguration();
             config.IdentityUrl = String.Empty;
@@ -105,7 +105,7 @@ namespace Finbourne.Identity.Sdk.Extensions.Tests
         }
 
         [Test]
-        public void ApiConfiguration_MissingConfig_Missing_ApiUrl_Returns_Correct_String()
+        public void ApiConfiguration_MissingConfig_Missing_IdentityUrl_Returns_Correct_String()
         {
             ApiConfiguration config = GetApiConfiguration();
             config.IdentityUrl = String.Empty;
