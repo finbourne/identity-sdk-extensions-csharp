@@ -35,7 +35,7 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
             _httpListener.Prefixes.Add(ListenerUriPrefix);
 
             var testApiConfig = IntegrationTestApiFactoryBuilder.CreateApiConfiguration("secrets.json");
-            testApiConfig.ApiUrl = ListenerUriPrefix;
+            testApiConfig.IdentityUrl = ListenerUriPrefix;
 
             _apiFactory = new ApiFactory(testApiConfig);
 

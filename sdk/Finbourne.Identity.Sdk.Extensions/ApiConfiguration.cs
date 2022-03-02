@@ -33,9 +33,9 @@ namespace Finbourne.Identity.Sdk.Extensions
         public string ClientSecret { get;  set; }
 
         /// <summary>
-        /// Api Url
+        /// Identity Api Url
         /// </summary>
-        public string ApiUrl { get; set; }
+        public string IdentityUrl { get; set; }
 
         /// <summary>
         /// Client Application name
@@ -53,7 +53,7 @@ namespace Finbourne.Identity.Sdk.Extensions
                    string.IsNullOrEmpty(Password) ||
                    string.IsNullOrEmpty(ClientId) ||
                    string.IsNullOrEmpty(ClientSecret) ||
-                   string.IsNullOrEmpty(ApiUrl);
+                   string.IsNullOrEmpty(IdentityUrl);
         }
 
         /// <summary>
@@ -83,9 +83,9 @@ namespace Finbourne.Identity.Sdk.Extensions
             {
                 missingConfig.Add(nameof(ClientSecret));
             } 
-            if (string.IsNullOrEmpty(ApiUrl))
+            if (string.IsNullOrEmpty(IdentityUrl))
             {
-                missingConfig.Add(nameof(ApiUrl));
+                missingConfig.Add(nameof(IdentityUrl));
             }
             return missingConfig;            
         }
