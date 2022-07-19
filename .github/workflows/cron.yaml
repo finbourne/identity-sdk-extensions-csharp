@@ -24,7 +24,7 @@ jobs:
           FBN_PASSWORD: ${{ secrets.FBN_PASSWORD }}
           FBN_CLIENT_ID: ${{ secrets.FBN_CLIENT_ID }}
           FBN_CLIENT_SECRET: ${{ secrets.FBN_CLIENT_SECRET }}
-          FBN_IDENTITY_API_URL: ${{ secrets.FBN_IDENTITY_URL }}
+          FBN_IDENTITY_API_URL: ${{ secrets.FBN_IDENTITY_API_URL }}
           FBN_APP_NAME: ${{ secrets.FBN_APP_NAME }}
           FBN_ACCESS_TOKEN: ${{ secrets.FBN_ACCESS_TOKEN }}
         run: | 
