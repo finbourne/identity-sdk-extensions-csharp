@@ -9,7 +9,4 @@ COPY Finbourne.Identity.Sdk.Extensions.Tests/Finbourne.Identity.Sdk.Extensions.T
 COPY Finbourne.Identity.Sdk.Extensions.IntegrationTests/Finbourne.Identity.Sdk.Extensions.IntegrationTests.csproj /usr/src/Finbourne.Identity.Sdk.Extensions.IntegrationTests/
 RUN dotnet restore Finbourne.Identity.Sdk.Extensions
 
-ENV FBN_IDENTITY_API_URL ${FBN_IDENTITY_API_URL}
-
-# ENTRYPOINT [ "/bin/bash" ]
-ENTRYPOINT dotnet test --configuration Release --verbosity normal Finbourne.Identity.Sdk.Extensions
+ENTRYPOINT dotnet test --configuration Release --verbosity normal
