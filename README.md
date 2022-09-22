@@ -22,3 +22,4 @@ $ dotnet add package Finbourne.Identity.Sdk.Extensions
 | branch | status |
 | --- | --- |
 | `master` | ![Nuget](https://img.shields.io/nuget/v/Finbourne.Identity.Sdk.Extensions?color=blue) [![Build and test](https://github.com/finbourne/identity-sdk-extensions-csharp/actions/workflows/build-and-test.yaml/badge.svg)](https://github.com/finbourne/identity-sdk-extensions-csharp/actions/workflows/build-and-test.yaml) |
+
