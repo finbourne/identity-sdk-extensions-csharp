@@ -44,15 +44,6 @@ namespace Finbourne.Identity.Sdk.Extensions.IntegrationTests
         }
 
         [Test]
-        public void Create_DomainsApi()
-        {
-            var api = _factory.Api<DomainsApi>();
-
-            Assert.That(api, Is.Not.Null);
-            Assert.That(api, Is.InstanceOf<DomainsApi>());
-        }
-
-        [Test]
         public void Create_PersonalAuthenticationTokensApi()
         {
             var api = _factory.Api<PersonalAuthenticationTokensApi>();
